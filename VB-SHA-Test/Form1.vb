@@ -18,18 +18,51 @@ Public Class Form1
         Public Shared hash_f As String
     End Class
 
-    Public Function HASHthis(ByVal pass As String, Optional ByVal salt As String = "")
+    Public Function HASHthis256(ByVal pass As String, Optional ByVal salt As String = "")
 
-        Dim mySHA As SHA256 = SHA256.Create()
-        Dim hashValue As Byte
+        Dim mySHA As SHA256 = SHA256Managed.Create()
+        Dim hashValue() As Byte
+        Dim passAsByte As Byte()
 
-        hashValue = mySHA.ComputeHash(pass)  'THIS IS NOT GOING TO WORK
+        passAsByte = System.Text.Encoding.Unicode.GetBytes(pass)
 
-        Dim Result As String
+        Dim ms As New MemoryStream(passAsByte)
 
-        Result = salt + pass
+        hashValue = mySHA.ComputeHash(ms)
 
-        Return Result
+        Dim Result As String = ""
+        Dim FinalResult = salt
+
+        For i = 0 To hashValue.Length - 1
+            Result += String.Format("{0:X2}", hashValue(i))
+
+        Next i
+
+        Return FinalResult + Result
+
+    End Function
+
+    Public Function HASHthis512(ByVal pass As String, Optional ByVal salt As String = "")
+
+        Dim mySHA As SHA512 = SHA512Managed.Create()
+        Dim hashValue() As Byte
+        Dim passAsByte As Byte()
+
+        passAsByte = System.Text.Encoding.Unicode.GetBytes(pass)
+
+        Dim ms As New MemoryStream(passAsByte)
+
+        hashValue = mySHA.ComputeHash(ms)
+
+        Dim Result As String = ""
+        Dim FinalResult = salt
+
+        For i = 0 To hashValue.Length - 1
+            Result += String.Format("{0:X2}", hashValue(i))
+
+        Next i
+
+        Return FinalResult + Result
 
     End Function
 
@@ -56,13 +89,19 @@ Public Class Form1
 
         End Sub
 
-        Private Sub Convert_b_Click(sender As Object, e As EventArgs) Handles Convert_b.Click
-            GlobalVariables.hash_f = HASHthis(PASS_tb.Text, GlobalVariables.SALT_G)
-            Result_tb.Text = GlobalVariables.hash_f
+    Private Sub Convert_b_Click(sender As Object, e As EventArgs) Handles Convert_b.Click
+        If SHA_cb.Text() = "SHA-512" Then
 
-        End Sub
+            GlobalVariables.hash_f = HASHthis512(PASS_tb.Text, GlobalVariables.SALT_G)
+        Else
+            GlobalVariables.hash_f = HASHthis256(PASS_tb.Text, GlobalVariables.SALT_G)
+        End If
 
-        Private Sub PASS_tb_TextChanged(sender As Object, e As EventArgs) Handles PASS_tb.TextChanged
+        Result_tb.Text = GlobalVariables.hash_f
+
+    End Sub
+
+    Private Sub PASS_tb_TextChanged(sender As Object, e As EventArgs) Handles PASS_tb.TextChanged
 
         End Sub
 
@@ -73,4 +112,24 @@ Public Class Form1
         Private Sub CopyToClip_Click(sender As Object, e As EventArgs) Handles CopyToClip.Click
             My.Computer.Clipboard.SetText(Result_tb.Text)
         End Sub
-    End Class
+
+    Private Sub toCompare_CheckedChanged(sender As Object, e As EventArgs) Handles toCompare.CheckedChanged
+
+        If toCompare.Enabled = True Then Compare1.Text = Result_tb.Text
+        If toCompare.Enabled = False Then Compare1.Text = ""
+
+
+    End Sub
+
+    Private Sub CompareButton_Click(sender As Object, e As EventArgs) Handles CompareButton.Click
+
+        If Compare1.Text = Compare2.Text Then
+            Compare1.BackColor = Color.Green
+            Compare2.BackColor = Color.Green
+        Else
+            Compare1.BackColor = Color.White
+            Compare2.BackColor = Color.White
+        End If
+
+    End Sub
+End Class

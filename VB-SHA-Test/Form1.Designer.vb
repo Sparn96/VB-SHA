@@ -30,6 +30,10 @@ Partial Class Form1
         Me.Convert_b = New System.Windows.Forms.Button()
         Me.Result_tb = New System.Windows.Forms.TextBox()
         Me.CopyToClip = New System.Windows.Forms.Button()
+        Me.Compare1 = New System.Windows.Forms.TextBox()
+        Me.Compare2 = New System.Windows.Forms.TextBox()
+        Me.toCompare = New System.Windows.Forms.CheckBox()
+        Me.CompareButton = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'PASS_tb
@@ -101,11 +105,48 @@ Partial Class Form1
         Me.CopyToClip.Text = "Copy to Clipboard"
         Me.CopyToClip.UseVisualStyleBackColor = True
         '
+        'Compare1
+        '
+        Me.Compare1.Location = New System.Drawing.Point(82, 251)
+        Me.Compare1.Name = "Compare1"
+        Me.Compare1.Size = New System.Drawing.Size(679, 20)
+        Me.Compare1.TabIndex = 9
+        '
+        'Compare2
+        '
+        Me.Compare2.Location = New System.Drawing.Point(82, 277)
+        Me.Compare2.Name = "Compare2"
+        Me.Compare2.Size = New System.Drawing.Size(679, 20)
+        Me.Compare2.TabIndex = 10
+        '
+        'toCompare
+        '
+        Me.toCompare.AutoSize = True
+        Me.toCompare.Location = New System.Drawing.Point(608, 185)
+        Me.toCompare.Name = "toCompare"
+        Me.toCompare.Size = New System.Drawing.Size(68, 17)
+        Me.toCompare.TabIndex = 11
+        Me.toCompare.Text = "Compare"
+        Me.toCompare.UseVisualStyleBackColor = True
+        '
+        'CompareButton
+        '
+        Me.CompareButton.Location = New System.Drawing.Point(365, 302)
+        Me.CompareButton.Name = "CompareButton"
+        Me.CompareButton.Size = New System.Drawing.Size(124, 31)
+        Me.CompareButton.TabIndex = 12
+        Me.CompareButton.Text = "Compare"
+        Me.CompareButton.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(826, 352)
+        Me.Controls.Add(Me.CompareButton)
+        Me.Controls.Add(Me.toCompare)
+        Me.Controls.Add(Me.Compare2)
+        Me.Controls.Add(Me.Compare1)
         Me.Controls.Add(Me.CopyToClip)
         Me.Controls.Add(Me.Result_tb)
         Me.Controls.Add(Me.Convert_b)
@@ -128,4 +169,8 @@ Partial Class Form1
     Friend WithEvents Convert_b As Button
     Friend WithEvents Result_tb As TextBox
     Friend WithEvents CopyToClip As Button
+    Friend WithEvents Compare1 As TextBox
+    Friend WithEvents Compare2 As TextBox
+    Friend WithEvents toCompare As CheckBox
+    Friend WithEvents CompareButton As Button
 End Class

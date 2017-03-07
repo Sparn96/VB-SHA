@@ -24,21 +24,20 @@ Public Class Form1
         Dim hashValue() As Byte
         Dim passAsByte As Byte()
 
-        passAsByte = System.Text.Encoding.Unicode.GetBytes(pass)
+        passAsByte = System.Text.Encoding.Unicode.GetBytes(pass + salt)
 
         Dim ms As New MemoryStream(passAsByte)
 
         hashValue = mySHA.ComputeHash(ms)
 
         Dim Result As String = ""
-        Dim FinalResult = salt
 
         For i = 0 To hashValue.Length - 1
             Result += String.Format("{0:X2}", hashValue(i))
 
         Next i
 
-        Return FinalResult + Result
+        Return Result
 
     End Function
 
@@ -48,21 +47,20 @@ Public Class Form1
         Dim hashValue() As Byte
         Dim passAsByte As Byte()
 
-        passAsByte = System.Text.Encoding.Unicode.GetBytes(pass)
+        passAsByte = System.Text.Encoding.Unicode.GetBytes(pass + salt)
 
         Dim ms As New MemoryStream(passAsByte)
 
         hashValue = mySHA.ComputeHash(ms)
 
         Dim Result As String = ""
-        Dim FinalResult = salt
 
         For i = 0 To hashValue.Length - 1
             Result += String.Format("{0:X2}", hashValue(i))
 
         Next i
 
-        Return FinalResult + Result
+        Return Result
 
     End Function
 
